@@ -8,7 +8,6 @@ import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,23 +43,16 @@ public class MailController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping(value = "/sendMessageFile", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
+    @PostMapping(value = "/sendMessageFile")
     public ResponseEntity<?> recieveRequestEmailWithFile(@ModelAttribute EmailFileDto emailFileDto) {
-        // Tener en cuenta que los archivos no son compatibles con el formato JSON
+
         Map<String, String> response = new HashMap<>();
 
         try {
 
-            //  Usamos getOriginalFilename porque brinda nombre + extensión
             String fileName = emailFileDto.getFile().getOriginalFilename();
-            // String fileName = emailFileDto.getFile().getName();
-
-            // Escribir la ruta del archivo puede ser con File o Path, recomienda Path por
-            // ser mas sencillo
             Path path = Paths.get("src/main/resources/files/" + fileName);
             Files.createDirectories(path.getParent());
-            // Opciones de StandardCopyOption elegimos copiar y reemplazar, revisar otros
-            // metodos
             Files.copy(emailFileDto.getFile().getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 
             File file = path.toFile();

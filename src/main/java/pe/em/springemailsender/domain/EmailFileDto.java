@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-//  Colocamos setter, para el multipart si los necesita
 @Setter
 @Getter
 @ToString

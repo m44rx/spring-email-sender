@@ -28,19 +28,14 @@ public class MailConfiguration {
         mailSender.setPassword(emailPassword);
 
         Properties props = mailSender.getJavaMailProperties();
-        // indicando el protocolo que vamos usar
         props.put("mail.transport.protocol", "smtp");
-        // obliga a realizar autenticacion previa al envio de correo
-
 
         props.put("mail.smtp.auth", "true");
-        // cifra toda comunicacion, envio de correo cifrado
         props.put("mail.smtp.starttls.enable", "true");
-        // muestra informacion en la consolo de los pasos de envio de correo, usado para
-        // dev no para prod
         props.put("mail.debug", "true");
 
         return mailSender;
+        
     }
 
 }
